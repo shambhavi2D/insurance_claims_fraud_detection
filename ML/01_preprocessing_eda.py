@@ -99,7 +99,6 @@ plt.tight_layout()
 plt.savefig("plots  01_target_class_balance.png", dpi=120)
 plt.show()
 
-"""Roughly 75% legitimate vs 25% fraud: this is a CLASS-IMBALANCED problem.
-Paper [1] specifically addresses this issue. It matters because a naive model can score 75% accuracy just by predicting "not fraud" for everyone, while being
-completely useless. This justifies (for later modeling steps) techniques like SMOTE, class-weighting, or F1/AUC-based evaluation instead of plain accuracy[1].
+"""Roughly 75% legitimate vs 25% fraud: this is a CLASS-IMBALANCED problem. It matters because a naive model can score 75% accuracy just by predicting "not fraud" for everyone, while being
+completely useless. This justifies (for later modeling steps) techniques like SMOTE, class-weighting, or F1/AUC-based evaluation instead of plain accuracy.
 """
