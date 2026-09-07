@@ -231,21 +231,15 @@ print("Any missing values left: ", X_encoded.isnull().sum().sum())
 print("Any non-numeric columns left: ",
       X_encoded.select_dtypes(exclude=[np.number]).columns.tolist())
 
-# SAVE OUTPUTS FOR MODEL TRAINING
-
-X_encoded.to_csv("X_features.csv", index=False)
-y_fraud.to_csv("y_fraud.csv", index=False)
-y_severity_regression.to_csv("y_severity_regression.csv", index=False)
-y_severity_class.to_csv("y_severity_class.csv", index=False)
-
-print("Saved: X_features.csv, y_fraud.csv, y_severity_regression.csv, y_severity_class.csv")
 
 print("\nThese four files are the direct input to our next notebook: model")
 print("training for fraud classification (Random Forest / XGBoost / SVM per")
-print("papers [1],[2],[5]) and severity estimation, followed by SHAP-based")
-print("explainability (papers [3],[6],[8]).")
 
-"""X_features.csv: All the input features after preprocessing, feature extraction, ordinal encoding, and one-hot encoding (Input X for all ML models)
+
+"""
+files in data/extracted folder:
+
+X_features.csv: All the input features after preprocessing, feature extraction, ordinal encoding, and one-hot encoding (Input X for all ML models)
 
 y_target: The fraud target — whether the insurance claim was fraudulent or not(For Fraud classification)
 
