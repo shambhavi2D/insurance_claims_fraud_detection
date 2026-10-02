@@ -11,7 +11,7 @@ warnings.filterwarnings("ignore")
 sns.set_style("whitegrid")
 plt.rcParams["figure.figsize"] = (8, 5)
 
-df = pd.read_csv("/content/archive.zip")  #load dataset
+df = pd.read_csv("/data/insurance_claims.csv")  #load dataset
 
 print("Shape of dataset (rows, columns):", df.shape)
 df.head()
