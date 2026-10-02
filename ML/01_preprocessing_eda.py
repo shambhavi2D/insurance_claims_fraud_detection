@@ -104,5 +104,9 @@ Paper [1] specifically addresses this issue. It matters because a naive model ca
 completely useless. This justifies (for later modeling steps) techniques like SMOTE, class-weighting, or F1/AUC-based evaluation instead of plain accuracy[1].
 """
 
+"""
+# Saving preprocessed file (already saved in data folder) 
+
 df.to_csv('processed_insurance_claims.csv', index=False)
 print('DataFrame saved to processed_insurance_claims.csv')
+"""
