@@ -15,7 +15,7 @@ import pandas as pd
 import numpy as np
 from sklearn.preprocessing import LabelEncoder, StandardScaler
 
-df = pd.read_csv("/content/processed_insurance_claims.csv")
+df = pd.read_csv("/data/processed_insurance_claims.csv")
 
 print("Starting shape:", df.shape)
 
