@@ -80,8 +80,8 @@ scaled file, the scaler would have been fitted on every row, test rows
 included, which is a small but real leak.)
 """
 
-X = pd.read_csv("X_features_unscaled.csv")
-y = pd.read_csv("y_fraud.csv").iloc[:, 0]  # 1 = fraud, 0 = legitimate
+X = pd.read_csv("data/extracted/X_features_unscaled.csv")
+y = pd.read_csv("data/extracted/y_fraud.csv").iloc[:, 0]  # 1 = fraud, 0 = legitimate
 
 print("X shape:", X.shape)
 print("Fraud share:", y.mean().round(3))
