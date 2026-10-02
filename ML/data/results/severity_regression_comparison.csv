@@ -1,0 +1,4 @@
+,MAE,RMSE,R2,Best Model
+Linear Regression,11330.086,14965.868,0.663,False
+Random Forest,10563.763,14437.293,0.687,True
+XGBoost,11285.666,15173.671,0.654,False
