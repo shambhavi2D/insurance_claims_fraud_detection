@@ -59,9 +59,11 @@ from imblearn.over_sampling import SMOTENC
 warnings.filterwarnings("ignore")
 sns.set_style("whitegrid")
 
+'''
 os.makedirs("models", exist_ok=True)
 os.makedirs("results", exist_ok=True)
 os.makedirs("plots", exist_ok=True)
+'''
 
 RANDOM_STATE = 42
 
