@@ -11,7 +11,7 @@ warnings.filterwarnings("ignore")
 sns.set_style("whitegrid")
 plt.rcParams["figure.figsize"] = (8, 5)
 
-df = pd.read_csv("data/insurance_claims.csv")  #load dataset
+df = pd.read_csv("/content/archive.zip")  #load dataset
 
 print("Shape of dataset (rows, columns):", df.shape)
 df.head()
@@ -99,6 +99,10 @@ plt.tight_layout()
 plt.savefig("plots  01_target_class_balance.png", dpi=120)
 plt.show()
 
-"""Roughly 75% legitimate vs 25% fraud: this is a CLASS-IMBALANCED problem. It matters because a naive model can score 75% accuracy just by predicting "not fraud" for everyone, while being
-completely useless. This justifies (for later modeling steps) techniques like SMOTE, class-weighting, or F1/AUC-based evaluation instead of plain accuracy.
+"""Roughly 75% legitimate vs 25% fraud: this is a CLASS-IMBALANCED problem.
+Paper [1] specifically addresses this issue. It matters because a naive model can score 75% accuracy just by predicting "not fraud" for everyone, while being
+completely useless. This justifies (for later modeling steps) techniques like SMOTE, class-weighting, or F1/AUC-based evaluation instead of plain accuracy[1].
 """
+
+df.to_csv('processed_insurance_claims.csv', index=False)
+print('DataFrame saved to processed_insurance_claims.csv')
