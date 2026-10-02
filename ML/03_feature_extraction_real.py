@@ -1,5 +1,5 @@
 # FEATURE EXTRACTION
-"""
+
 This turns the CLEANED dataset into a numeric feature matrix that a model (Random Forest / XGBoost / SVM can actually be trained on.)
 
 Feature extraction here has 3 parts:
@@ -15,7 +15,7 @@ import pandas as pd
 import numpy as np
 from sklearn.preprocessing import LabelEncoder, StandardScaler
 
-df = pd.read_csv("data/processed_insurance_claims.csv")
+df = pd.read_csv("/content/processed_insurance_claims.csv")
 
 print("Starting shape:", df.shape)
 
@@ -181,6 +181,18 @@ print("\nFeature matrix shape (before encoding):", X.shape)
 print(X["insured_education_level"].unique())
 print(X["insured_education_level"].dtype)
 
+"""#### FIX: ordinal-encode insured_education_level
+
+This step was missing from the notebook as uploaded. Without it, `insured_education_level` is still plain text at the one-hot-encoding step below, so it gets split into ~6 separate 0/1 columns with no sense of order -- throwing away the fact that PhD > Masters > ... > High School is a real, meaningful ranking. Tree-based models (Random Forest, XGBoost) can use that ordering directly if we encode it as a single ordinal column instead.
+
+"""
+
+education_order = ["High School", "College", "Associate", "JD", "Masters", "MD", "PhD"]
+X["insured_education_level"] = X["insured_education_level"].apply(
+    lambda x: education_order.index(x)
+)
+print("insured_education_level encoded as ordinal 0-6:", sorted(X["insured_education_level"].unique()))
+
 # ---- One-hot encoding for nominal categorical columns ----
 
 nominal_cols = X.select_dtypes(
@@ -214,7 +226,14 @@ Our numeric features are on very different scales; e.g. age (19-64)
  We fit the scaler only on numeric columns; the one-hot (0/1) columns are
  left as-is, since scaling binary indicator columns is unnecessary and
  actually makes them harder to interpret.
+
+#### Save the UNSCALED feature matrix too
+
+The fair model-comparison notebooks (04 and 05) need to fit their own scaler **inside each cross-validation fold**, not once on the whole dataset -- fitting it beforehand here would let a little information about rows that later land in a test fold leak into training. So alongside the final scaled `X_features.csv`, we also save an encoded-but-unscaled version for those notebooks to start from.
 """
+
+X_encoded.to_csv("X_features_unscaled.csv", index=False)
+print("Saved: X_features_unscaled.csv (112 features, not yet scaled)")
 
 numeric_feature_cols = X.select_dtypes(include=[np.number]).columns.tolist()
 # (insured_education_level is now numeric/ordinal too, so it's included here)
@@ -231,15 +250,22 @@ print("Any missing values left: ", X_encoded.isnull().sum().sum())
 print("Any non-numeric columns left: ",
       X_encoded.select_dtypes(exclude=[np.number]).columns.tolist())
 
+'''
+# SAVE OUTPUTS FOR MODEL TRAINING (already saved in data folder)
+
+X_encoded.to_csv("X_features.csv", index=False)
+y_fraud.to_csv("y_fraud.csv", index=False)
+y_severity_regression.to_csv("y_severity_regression.csv", index=False)
+y_severity_class.to_csv("y_severity_class.csv", index=False)
+
+print("Saved: X_features.csv, X_features_unscaled.csv, y_fraud.csv, y_severity_regression.csv, y_severity_class.csv")
 
 print("\nThese four files are the direct input to our next notebook: model")
 print("training for fraud classification (Random Forest / XGBoost / SVM per")
-
-
-"""
-files in data/extracted folder:
-
-X_features.csv: All the input features after preprocessing, feature extraction, ordinal encoding, and one-hot encoding (Input X for all ML models)
+print("papers [1],[2],[5]) and severity estimation, followed by SHAP-based")
+print("explainability (papers [3],[6],[8]).")
+'''
+"""X_features.csv: All the input features after preprocessing, feature extraction, ordinal encoding, and one-hot encoding (Input X for all ML models)
 
 y_target: The fraud target — whether the insurance claim was fraudulent or not(For Fraud classification)
 
