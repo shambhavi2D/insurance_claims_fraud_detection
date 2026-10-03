@@ -1,0 +1,28 @@
+{
+  "regressor": {
+    "model": "Random Forest",
+    "best_params": {
+      "reg__max_depth": 4,
+      "reg__min_samples_leaf": 1
+    },
+    "cv_mae_mean": 10917.611874853796,
+    "cv_mae_std": 652.5693080369313,
+    "cv_r2_mean": 0.6835072537837339,
+    "test_metrics": {
+      "mae": 10565.029434281703,
+      "rmse": 14355.658078141825,
+      "r2": 0.6903317523347077
+    }
+  },
+  "tier_classifier": {
+    "model": "XGBoost",
+    "best_params": {
+      "clf__learning_rate": 0.1,
+      "clf__max_depth": 2
+    },
+    "test_metrics": {
+      "accuracy": 0.4,
+      "f1_macro": 0.40174280917590854
+    }
+  }
+}
