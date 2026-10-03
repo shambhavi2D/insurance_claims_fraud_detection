@@ -36,8 +36,8 @@ RANDOM_STATE = 42
 import os
 os.makedirs("models", exist_ok=True)
 os.makedirs("results", exist_ok=True)
-os.makedirs("plots", exist_ok=True)
 """
+os.makedirs("plots", exist_ok=True)
 
 # LOAD DATA
 
