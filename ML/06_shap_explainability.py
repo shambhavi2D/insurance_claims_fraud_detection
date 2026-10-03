@@ -38,16 +38,16 @@ WHY LOAD RATHER THAN RETRAIN: SHAP explanations are only meaningful for the
 EXACT trained model object that was evaluated and would be deployed, not a
 freshly retrained copy that might land on slightly different weights.
 '''
-fraud_model = joblib.load("best_fraud_model.joblib")
-fraud_preprocessor = joblib.load("fraud_preprocessor.joblib")
-fraud_feature_names = joblib.load("fraud_feature_names.joblib")
+fraud_model = joblib.load("data/models/best_fraud_model.joblib")
+fraud_preprocessor = joblib.load("data/models/fraud_preprocessor.joblib")
+fraud_feature_names = joblib.load("data/models/fraud_feature_names.joblib")
 
-severity_regressor = joblib.load("severity_regressor.joblib")
-severity_regressor_preprocessor = joblib.load("severity_regressor_preprocessor.joblib")
-severity_tier_classifier = joblib.load("severity_tier_classifier.joblib")
-severity_tier_preprocessor = joblib.load("severity_tier_preprocessor.joblib")
-severity_feature_names = joblib.load("severity_feature_names.joblib")
-severity_tier_categories = joblib.load("severity_tier_categories.joblib")
+severity_regressor = joblib.load("data/models/severity_regressor.joblib")
+severity_regressor_preprocessor = joblib.load("data/models/severity_regressor_preprocessor.joblib")
+severity_tier_classifier = joblib.load("data/models/severity_tier_classifier.joblib")
+severity_tier_preprocessor = joblib.load("data/models/severity_tier_preprocessor.joblib")
+severity_feature_names = joblib.load("data/models/severity_feature_names.joblib")
+severity_tier_categories = joblib.load("data/models/severity_tier_categories.joblib")
 
 print("Fraud model:", type(fraud_model).__name__)
 print("Severity regressor:", type(severity_regressor).__name__)
@@ -56,8 +56,8 @@ print("Tier categories (in encoded order):", list(severity_tier_categories))
 
 # REBUILD THE SAME TRAIN/TEST SPLITS USED BEFORE, THEN PREPROCESS
 
-y_fraud = pd.read_csv("y_fraud.csv").iloc[:, 0]
-X_fraud_unscaled_full = pd.read_csv("X_features_unscaled.csv")
+y_fraud = pd.read_csv("data/extracted/y_fraud.csv").iloc[:, 0]
+X_fraud_unscaled_full = pd.read_csv("data/extracted/X_features_unscaled.csv")
 X_fraud_raw_train, X_fraud_raw_test, y_fraud_train, y_fraud_test = train_test_split(
     X_fraud_unscaled_full, y_fraud, test_size=0.2, random_state=RANDOM_STATE, stratify=y_fraud
 )
@@ -75,8 +75,8 @@ LEAKY_SEVERITY_COLS = [
 X_severity_unscaled_full = X_fraud_unscaled_full.drop(
     columns=[c for c in LEAKY_SEVERITY_COLS if c in X_fraud_unscaled_full.columns]
 )
-y_amount = pd.read_csv("y_severity_regression.csv").iloc[:, 0]
-y_tier = pd.read_csv("y_severity_class.csv").iloc[:, 0]
+y_amount = pd.read_csv("data/extracted/y_severity_regression.csv").iloc[:, 0]
+y_tier = pd.read_csv("data/extracted/y_severity_class.csv").iloc[:, 0]
 
 # do the exact same 3-way # split here to land on the identical test rows.
 X_sev_raw_train, X_sev_raw_test, y_amount_train, y_amount_test, y_tier_train, y_tier_test = \
