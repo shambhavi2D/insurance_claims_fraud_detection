@@ -1,0 +1,11 @@
+fastapi
+uvicorn[standard]
+pydantic
+pandas
+numpy
+scikit-learn
+xgboost
+shap
+joblib
+# optional, only needed if you set ANTHROPIC_API_KEY for LLM-written summaries:
+anthropic
